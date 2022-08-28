@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {BoardService} from "../../service/board.service";
+import {T} from "@angular/cdk/keycodes";
+import {Card} from "../../models/column.model";
 
 @Component({
   selector: 'app-board',
@@ -7,13 +10,34 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent {
-  todo = ['Carrots', 'Tomatoes', 'Onions', 'Apples', 'Avocados'];
 
-  done = ['Oranges', 'Bananas', 'Cucumbers'];
+  constructor(
+    public boardService: BoardService
+  ) {
+  }
 
-  progress = ['Oranges', 'Bananas', 'Cucumbers'];
+  ngOnInit(): void {
+    console.log('BOARD - INIT')
+  }
 
-  drop(event: CdkDragDrop<string[]>) {
+  onDeleteCard(cardId: number, columnId: number) {
+    this.boardService.deleteCard(cardId, columnId);
+  }
+
+  onChangeLike(event: {card: any, increase: boolean}, columnId: number ) {
+    const { card: { id }, increase } = event
+    this.boardService.changeLike(id, columnId, increase)
+  }
+
+  onAddComment(event: { id: number, text: string }, columnId: number) {
+    this.boardService.addComment(columnId, event.id, event.text);
+  }
+
+  onDeleteComment({comment, columnId, item}: { comment: any, columnId: any, item: any }) {
+    this.boardService.deleteComment(columnId, item.id, comment.id)
+  }
+
+  drop(event: CdkDragDrop<Card[], any>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -25,10 +49,18 @@ export class BoardComponent {
       );
     }
   }
-  data = [
-    this.done,
-    this.todo,
-    // this.progress
-  ]
 
+  onAddCard(text: string, columnId: number) {
+    if(text) {
+      this.boardService.addCard(text, columnId)
+    }
+  }
+
+  onDeleteColumn(columnId: number) {
+    this.boardService.deleteColumn(columnId);
+  }
+
+  onColorChange(color: string, columnId: number) {
+    this.boardService.changeColumnColor(color, columnId)
+  }
 }

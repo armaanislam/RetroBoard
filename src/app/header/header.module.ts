@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import {DialogueModule} from "../components/dialogue/dialogue.module";
 
 
 
@@ -15,7 +16,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    DialogueModule
   ],
   exports: [
     HeaderComponent

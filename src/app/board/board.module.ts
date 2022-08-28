@@ -6,12 +6,20 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatExpansionModule} from "@angular/material/expansion";
+import { BoardItemComponent } from './board-item/board-item.component';
+import {FormsModule} from "@angular/forms";
+import { CommentItemComponent } from './comment-item/comment-item.component';
+import {DialogueModule} from "../components/dialogue/dialogue.module";
+import { ColorPanelComponent } from './color-panel/color-panel.component';
 
 
 
 @NgModule({
   declarations: [
-    BoardComponent
+    BoardComponent,
+    BoardItemComponent,
+    CommentItemComponent,
+    ColorPanelComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +27,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatIconModule,
     MatButtonModule,
     DragDropModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FormsModule,
+    DialogueModule
   ],
   exports: [
     BoardComponent
